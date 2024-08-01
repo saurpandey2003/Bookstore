@@ -8,7 +8,8 @@ const user = BookStoreDB.model('user', userSchema);
 
 router.post('/add-to-cart', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { id, bookid } = req.headers;
+        const {id} = req.user; 
+        const { bookid } = req.headers;
         const User = await user.findById(id);
         const Book = await book.findById(bookid)
         if (!User) {
@@ -36,7 +37,8 @@ router.post('/add-to-cart', jwtAuthMiddleware, async (req, res) => {
 
 router.put("/delete", jwtAuthMiddleware, async (req, res) => {
     try {
-        const { id, bookid } = req.headers;
+        const {id} = req.user; 
+        const { bookid } = req.headers;
         const User = await user.findById(id);
         const Book = await book.findById(bookid)
         if (!User) {
@@ -64,7 +66,7 @@ router.put("/delete", jwtAuthMiddleware, async (req, res) => {
 })
 router.get('/get-cart-book', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { id } = req.headers;
+        const { id } = req.user;
         const User = await user.findById(id).populate('cart');
         const cart_data = User.cart;
         return res.status(200).json({ status: "ok", data: cart_data })

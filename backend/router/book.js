@@ -8,7 +8,7 @@ const user = BookStoreDB.model('user', userSchema);
 
 
 
-router.post('/add', jwtAuthMiddleware, async (req, res) => {
+router.post('/add', async (req, res) => {
     try {
         const { id } = req.headers;
         const User = await user.findById(id);
@@ -84,9 +84,9 @@ router.delete('/delete',jwtAuthMiddleware,async(req,res)=>{
         return res.status(504).json({ message: "Internal server error" });
     }
 })
-router.get('/recent-4',jwtAuthMiddleware,async(req,res)=>{
+router.get('/recent-4',async(req,res)=>{
     try{
-        const getTop4=await book.find().limit(4);
+        const getTop4=await book.find().sort({createdAt:-1}).limit(4);
         return res.status(200).json({getTop4});
 
     }catch{
@@ -105,6 +105,14 @@ router.get('/bookid/:id',jwtAuthMiddleware,async(req,res)=>{
         return res.status(506).json({ message: "Internal server error" });
     }
 })
-
+router.get('/allBooks', async (req, res) => {
+    try {
+        const allBooks = await book.find();
+        return res.status(200).json({ allBooks });
+    } catch (err) {
+        console.error(err);
+        return res.status(507).json({ message: "Internal server error" });
+    }
+});
 
 module.exports = router;

@@ -1,0 +1,91 @@
+/* RecentBook.css */
+
+.recent-books {
+  padding: 20px 0; /* Adjust padding to remove gaps on the sides */
+  margin: 0; /* Remove default margins */
+  background-image: url('https://images.unsplash.com/photo-1705721357357-ab87523248f7?q=80&w=1854&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  color: #fff; /* Change text color to white for better contrast */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); /* Add text shadow for better readability */
+  border-radius: 0; /* Remove border radius to use the full width */
+  box-shadow: none; /* Remove box shadow to use the full width */
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Display only three books in a row */
+  gap: 20px;
+  padding: 0 20px; /* Add padding to the container to create space between book items and the edges */
+}
+
+.book-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.book-details {
+  text-align: center;
+}
+
+.book-details h2 {
+  font-size: 1.5em;
+  margin-bottom: 8px;
+}
+
+.book-details p {
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Space between buttons */
+  margin-top: 10px; /* Space above buttons */
+}
+
+.button-remove {
+  background-color: #ff4757;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  flex: 1; /* Ensure buttons have equal width */
+}
+
+.button-remove:hover {
+  background-color: #e84142;
+}
+
+@media (max-width: 768px) {
+  .books-container {
+    grid-template-columns: repeat(2, 1fr); /* Two books in a row for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .books-container {
+    grid-template-columns: 1fr; /* One book in a row for very small screens */
+  }
+
+  .book-item {
+    padding: 10px;
+  }
+}

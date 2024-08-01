@@ -10,7 +10,7 @@ const  { generateToken, jwtAuthMiddleware }=require('../jwt')
 
 router.post('/sign-up', async (req, res) => {
     try {
-        const { email, password, username, address,favourites,cart,order } = req.body;
+        const { email, password, username, address } = req.body;
 
         if (username.length < 4) {
             return res.status(400).json({ message: "Username must be greater than 3 characters" });
@@ -38,7 +38,7 @@ router.post('/sign-up', async (req, res) => {
         await newUser.save();
 
 
-        return res.status(200).json("Signup successful",{newUser});
+        return res.status(200).json("Signup successful");
 
     } catch (err) {
         console.error(err);
@@ -49,9 +49,9 @@ router.post('/sign-up', async (req, res) => {
 router.post('/sign-in',async(req,res)=>{
     
     try{
-        const {username,password}=req.body;
+        const {email,password}=req.body;
 
-        const existingUser=await user.findOne({username:username});
+        const existingUser=await user.findOne({email:email});
         if(!existingUser){
             return res.status(200).json({message:"Invalid credtinal "})
         }
@@ -61,8 +61,8 @@ router.post('/sign-in',async(req,res)=>{
                     id: existingUser._id,
                     role:existingUser.role
                 };
-                const token = generateToken(payload);
-                res.json({ token ,username,id:existingUser._id,role:existingUser.role,message:"login sucessfully"});
+               const token = generateToken(payload);
+                res.json({message:"login sucessfully",token,existingUser});
             }else
             res.status(200).json({message:"login not valid"})
 
@@ -78,7 +78,7 @@ router.post('/sign-in',async(req,res)=>{
 
 router.get('/profile',jwtAuthMiddleware,async(req,res)=>{
     try{
-         const {id}=req.headers;
+         const {id}=req.user;
          const data=await user.findById(id);
          return res.status(200).json(data);
 

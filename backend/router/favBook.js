@@ -11,7 +11,8 @@ const user = BookStoreDB.model('user', userSchema);
 router.put('/favBook', jwtAuthMiddleware, async (req, res) => {
     try {
         // Fetching id and Bookid from headers
-        const { id, bookid } = req.headers;
+        const {id} = req.user; 
+        const { bookid } = req.headers;
 
         // Find the user by ID
         const findUser = await user.findById(id);
@@ -43,7 +44,8 @@ router.put('/favBook', jwtAuthMiddleware, async (req, res) => {
 
 router.put('/fav_delete', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { id, bookid } = req.headers;
+        const {id} = req.user; 
+        const { bookid } = req.headers;
         const User = await user.findById(id);
         const Book = await book.findById(bookid);
         if (!User) {
@@ -69,7 +71,7 @@ router.put('/fav_delete', jwtAuthMiddleware, async (req, res) => {
 
 router.get('/get-fav-book', jwtAuthMiddleware, async (req, res) => {
     try {
-        const { id } = req.headers;
+        const { id } = req.user;
         const userWithFavourites = await user.findById(id).populate('favourites');
         if (!userWithFavourites) {
             return res.status(404).json({ message: "User not found" });

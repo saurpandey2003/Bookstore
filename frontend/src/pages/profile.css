@@ -1,0 +1,37 @@
+.container-fluid {
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .card-title {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  img.rounded-circle {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .form-label {
+    font-size: 1.2rem;
+    color: #495057;
+  }
+  
+  .form-control-plaintext {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+  
