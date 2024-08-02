@@ -91,7 +91,7 @@ router.get('/profile',jwtAuthMiddleware,async(req,res)=>{
 
 router.put('/update-address',jwtAuthMiddleware,async(req,res)=>{
     try{
-        const {id}=req.headers;
+        const {id}=req.user;
         const {address}=req.body;
         const findUser_data=await user.findByIdAndUpdate(id,{address:address});
         return res.status(200).json({message:"address updated",findUser_data});
@@ -101,19 +101,42 @@ router.put('/update-address',jwtAuthMiddleware,async(req,res)=>{
 
     }
 })
-router.put('/update-email',jwtAuthMiddleware,async(req,res)=>{
-    try{
-        const {id}=req.headers;
-        const {email}=req.body;
-        const newEmail=await user.findByIdAndUpdate(id,{email:email});
-        return res.status(200).json({message:"email updated",newEmail})
-
-    }catch(err){
-        res.status(200).json({message:"falied to update email"})
+router.put('/update-username', jwtAuthMiddleware, async (req, res) => {
+    try {
+      const { id } = req.user;
+      const { username } = req.body;
+      
+      // Check if username already exists
+      const existingUser = await user.findOne({ username });
+      if (existingUser && existingUser._id.toString() !== id) {
+        return res.status(400).json({ message: "Username already exists" });
+      }
+  
+      const updatedUser = await user.findByIdAndUpdate(id, { username: username }, { new: true });
+      return res.status(200).json({ message: "Username updated", updatedUser });
+    } catch (err) {
+      return res.status(400).json({ message: "Failed to update username" });
     }
-   
-})
-
+  });
+  
+  router.put('/update-email', jwtAuthMiddleware, async (req, res) => {
+    try {
+      const { id } = req.user;
+      const { email } = req.body;
+  
+      // Check if email already exists
+      const existingUser = await user.findOne({ email });
+      if (existingUser && existingUser._id.toString() !== id) {
+        return res.status(400).json({ message: "Email already exists" });
+      }
+  
+      const updatedUser = await user.findByIdAndUpdate(id, { email: email }, { new: true });
+      return res.status(200).json({ message: "Email updated", updatedUser });
+    } catch (err) {
+      return res.status(400).json({ message: "Failed to update email" });
+    }
+  });
+  
 
 
 module.exports = router;

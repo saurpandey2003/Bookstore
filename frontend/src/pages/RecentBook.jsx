@@ -2,20 +2,65 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './RecentBook.css';
 
-// RecentBooks component
 const RecentBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await axios.get("http://localhost:5000/book/recent-4");
-      setBooks(response.data.getTop4);
-      console.log(response.data.getTop4);
-      setLoading(false);
+      try {
+        const response = await axios.get("http://localhost:5000/book/recent-4");
+        setBooks(response.data.getTop4);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching recent books:", error);
+        setLoading(false);
+      }
     };
     fetch();
   }, []);
+
+  const addToCart = async (bookId) => {
+    try {
+      const userId = localStorage.getItem('id');
+      const response = await axios.post(
+        'http://localhost:5000/cart/add-to-cart',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            id: userId,
+            bookid: bookId
+          }
+        }
+      );
+      alert(response.data.message);
+    } catch (err) {
+      console.error(err);
+      alert(err.response ? err.response.data.message : 'Error adding book to cart');
+    }
+  };
+
+  const addToFavourites = async (bookId) => {
+    try {
+      const userId = localStorage.getItem('id'); 
+      const response = await axios.put(
+        'http://localhost:5000/favourites/favBook',
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+            id: userId,
+            bookid: bookId
+          }
+        }
+      );
+      alert(response.data.message);
+    } catch (err) {
+      console.error(err);
+      alert(err.response ? err.response.data.message : 'Error adding book to favourites');
+    }
+  };
 
   return (
     <div className="recent-books">
@@ -31,6 +76,10 @@ const RecentBooks = () => {
                 <p>{book.desc}</p>
                 <p><strong>Author:</strong> {book.author}</p>
                 <p><strong>Price:</strong> ${book.price}</p>
+                <div className="button-container">
+                  <button className="button-remove" onClick={() => addToCart(book._id)}>Add Cart</button>
+                  <button className="button-remove" onClick={() => addToFavourites(book._id)}>Add Favourites</button>
+                </div>
               </div>
             </div>
           ))}

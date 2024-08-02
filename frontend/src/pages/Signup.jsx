@@ -12,6 +12,7 @@ const Signup = () => {
   });
   
   const navigate = useNavigate();
+  const [serverError, setServerError] = useState('');
 
   const [errors, setErrors] = useState({
     username: '',
@@ -67,6 +68,9 @@ const Signup = () => {
         console.log(response.data.newUser);
         navigate('/login');
       } catch (error) {
+        const errorMessage = error.response?.data?.message || 'An error occurred during signup.';
+        setServerError(errorMessage);
+        alert(errorMessage);
         console.error('Error during signup:', error);
       }
     }
