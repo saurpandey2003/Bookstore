@@ -13,6 +13,8 @@ import Profile from './pages/Profile';
 import { useDispatch, useSelector } from 'react-redux';
 import auth, { login,changerole } from './Stores/auth';
 import Cart from './pages/Cart';
+import About_us from './pages/About_us';
+import Favourite from './pages/Favourite';
 
 
 const App = () => {
@@ -40,6 +42,11 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart/>} />
+          <Route path="/about" element={<About_us/>} />
+          <Route path="/favourite" element={<Favourite/>} />
+          
+
+
           
 
 

@@ -44,7 +44,7 @@ const AllBooks = () => {
 
   const addToFavourite = async (bookId) => {
     try {
-      const userId = localStorage.getItem('id'); // Assuming user ID is stored in localStorage
+      const userId = localStorage.getItem('id'); 
       const response = await axios.put(
         'http://localhost:5000/favourites/favBook',
         {},

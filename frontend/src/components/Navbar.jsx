@@ -29,7 +29,7 @@ const Navbar = () => {
     { title: 'Home', to: '/' },
     { title: 'About Us', to: '/about' },
     { title: 'All Books', to: '/allBooks' },
-    ...(isLoggedIn ? [{ title: 'Profile', to: '/profile' },  { title: 'Cart', to: '/cart' }] : []), // Include Profile link only if logged in
+    ...(isLoggedIn ? [{ title: 'Profile', to: '/profile' },  { title: 'Cart', to: '/cart' }, { title: 'Favourite', to: '/favourite' }] : []), // Include Profile link only if logged in
   ];
 
   return (

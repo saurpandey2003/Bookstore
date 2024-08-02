@@ -77,7 +77,7 @@ router.get('/get-fav-book', jwtAuthMiddleware, async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        return res.status(200).json({ status: "ok", data: userWithFavourites.favourites });
+        return res.status(200).json({ status: "ok", userWithFavourites });
     } catch (err) {
         console.error(err);
         return res.status(500).json({ message: "Internal server error" });
